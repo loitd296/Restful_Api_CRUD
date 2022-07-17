@@ -15,7 +15,16 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 //Database
-
+mongoose.connect(
+  process.env.MONGO_URL,
+  {
+    autoIndex: false,
+  },
+  (err) => {
+    if (err) throw err;
+    console.log('Mongodb connection');
+  }
+);
 //Routes
 app.get('/', (req, res) => {
   res.json({ msg: 'Hello' });
