@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import morgan from 'morgan';
+import routes from './routes';
 
 dotenv.config();
 
@@ -26,9 +27,7 @@ mongoose.connect(
   }
 );
 //Routes
-app.get('/', (req, res) => {
-  res.json({ msg: 'Hello' });
-});
+app.use('/api', routes);
 
 //Start sever
 const PORT = process.env.PORT || 5000;
