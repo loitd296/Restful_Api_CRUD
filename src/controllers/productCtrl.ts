@@ -42,10 +42,42 @@ const productCtr = {
     }
   },
   updateProduct: async (req, res) => {
-    res.json({ msg: `Update product by id ${req.params.id}` });
+    try {
+      const { title, price, description, category, image } = req.body;
+
+      const product = await Products.findByIdAndUpdate(
+        req.params.id,
+        {
+          title,
+          price,
+          description,
+          category,
+          image,
+        },
+        { new: true }
+      );
+      if (!product) {
+        return res.status(404).json({ msg: 'This product does not exist' });
+      }
+
+      return res.status(200).json(product);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
   },
   deleteProduct: async (req, res) => {
-    res.json({ msg: `delete a product by id ${req.params.id}` });
+    try {
+      const { title, price, description, category, image } = req.body;
+
+      const product = await Products.findByIdAndDelete(req.params.id);
+      if (!product) {
+        return res.status(404).json({ msg: 'This product does not exist' });
+      }
+
+      return res.status(200).json({ msg: 'Deleted Successfully' });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
   },
 };
 
